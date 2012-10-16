@@ -32,7 +32,7 @@ class RelForm < Sinatra::Base
     alias_method :h, :escape_html
 
     def input_text(val_name, attr_name)
-      %Q{<input type="text" name="#{val_name}[#{attr_name}]" value="#{h instance_variable_get("@#{val_name}").send(attr_name) }">}
+      %Q{<input type="text" id="#{val_name}_#{attr_name}" name="#{val_name}[#{attr_name}]" value="#{h instance_variable_get("@#{val_name}").send(attr_name) }">}
     end
   end
 
