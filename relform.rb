@@ -13,9 +13,9 @@ class RelForm < Sinatra::Base
   enable :static
   enable :sessions
 
-  REL_FIELDS = %w(seq type title date time producer movie_author
-                  illust_author vocaloid_chars email twitter
-                  description)
+  REL_FIELDS = %w(seq stamp type title url producer linkurl media
+                  date time movie_author illust_author vocaloid_chars
+                  twitter email description)
 
   @@data_dir = 'data'
   @@notify = true
@@ -45,11 +45,15 @@ class RelForm < Sinatra::Base
     @relinfo = OpenStruct.new(params[:relinfo])
     @is_error = false
 
-    if @relinfo.title.blank? ||
-        @relinfo.producer.blank? ||
-        @relinfo.date.blank? ||
+    @relinfo.media ||= []
+    @relinfo.media = @relinfo.media.find_all {|i| !i.blank? }.join("//")
+    @relinfo.vocaloid_chars ||= []
+    @relinfo.vocaloid_chars = @relinfo.vocaloid_chars.find_all {|i| !i.blank? }.join("//")
+
+    if @relinfo.title.blank? || @relinfo.type.blank? ||
+        @relinfo.producer.blank? || @relinfo.date.blank? ||
         (@relinfo.twitter.blank? && @relinfo.email.blank?) ||
-        @relinfo.description.blank?
+        @relinfo.media.blank? || @relinfo.vocaloid_chars.blank?
       @is_error = true
     end
 
@@ -64,6 +68,7 @@ class RelForm < Sinatra::Base
         seq = 1
       end
       @relinfo.seq = session[:seq] = seq
+      @relinfo.stamp = Time.now.strftime("%F %T")
 
       if !@relinfo.image_file.blank? && @relinfo.image_file[:tempfile]
         ext = File.extname @relinfo.image_file[:filename]

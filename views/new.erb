@@ -13,16 +13,36 @@
       <select name="relinfo[type]">
         <option>新規</option>
         <option>変更</option>
+        <option>削除</option>
       </select>
     </td>
   </tr>
   <tr>
-    <th>曲名 <span class="required-mark">*</span></th>
+    <th>新曲タイトル <span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :title %></td>
+  </tr>
+  <tr>
+    <th>URL</th>
+    <td><%= input_text :relinfo, :url %></td>
   </tr>
   <tr>
     <th>P名 <span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :producer %></td>
+  </tr>
+  <tr>
+    <th>リンクURL</th>
+    <td><%= input_text :relinfo, :linkurl %></td>
+  </tr>
+  <tr>
+    <th>(主)発表媒体</th>
+    <td>
+    <label><input type="checkbox" name="relinfo[media][]" value="ニコ動">ニコ動</label>
+    <label><input type="checkbox" name="relinfo[media][]" value="YouTube">YouTube</label>
+    <label><input type="checkbox" name="relinfo[media][]" value="Sound Croud">Sound Croud</label>
+    <label><input type="checkbox" name="relinfo[media][]" value="Vimeo">Vimeo</label>
+    <br>
+    その他（自由記述）: <input type="text" name="relinfo[media][]">
+    </td>
   </tr>
   <tr>
     <th>発表予定日 <span class="required-mark">*</span></th>
@@ -37,27 +57,33 @@
     <td><input type="file" name="relinfo[image_file]"></td>
   </tr>
   <tr>
-    <th>使用ボカロ</th>
-    <td><%= input_text :relinfo, :vocaloid_chars %></td>
+    <th>使用ボカロ <span class="required-mark">*</span></th>
+    <td>
+    <% "LEON｜LOLA｜MIRIAM｜PRIMA｜SONIKA｜TONIO｜MEIKO｜KAITO｜初音ミク｜鏡音リン｜鏡音レン｜巡音ルカ｜SWEET ANN｜BIG AL｜OLIVER｜がくっぽいど｜Megpoid｜Lilly｜ガチャッポイド｜CUL｜氷山キヨテル｜歌愛ユキ｜SF-A2 開発コード miki｜猫村いろは｜結月ゆかり｜VY1｜VY2｜Mew｜兎眠りおん｜蒼姫ラピス｜Merli｜歌手音ピコ｜SeeU｜BRUNO｜CLARA｜IA｜洛天依｜CV-4Cβ｜あきこロイド｜galaco｜未定/TBA".split("｜").each do |v| %>
+       <label><input type="checkbox" name="relinfo[vocaloid_chars][]" value="<%=h v %>"><%=h v %></label>
+     <% end %>
+     <br>
+     その他:<input type="text" name="relinfo[vocaloid_chars][]">
+    </td>
   </tr>
   <tr>
-    <th>動画師</th>
+    <th>動画師名</th>
     <td><%= input_text :relinfo, :movie_author %></td>
   </tr>
   <tr>
-    <th>絵師</th>
+    <th>絵師名</th>
     <td><%= input_text :relinfo, :illust_author %></td>
   </tr>
   <tr>
-    <th>連絡先(twitter) <span class="required-mark">*</span></th>
+    <th>twitterID <span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :twitter %></td>
   </tr>
   <tr>
-    <th>連絡先(Email) <span class="required-mark">*</span></th>
+    <th>メールアドレス <span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :email %></td>
   </tr>
   <tr>
-    <th>解説 <span class="required-mark">*</span></th>
+    <th>解説文</th>
     <td><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea>
   </tr>
 </table>
