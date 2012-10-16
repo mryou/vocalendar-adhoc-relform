@@ -1,0 +1,65 @@
+<form method="post" action="create" enctype="multipart/form-data"> 
+<p>
+以下の情報を入力して下さい。
+<span class="required-mark">*</span> マークは必須です(連絡先はどちらか)。
+</p>
+<% if @is_error %>
+<p class="error">必須項目が入力されていません。入力を確認してください。</p>
+<% end %>
+<table>
+  <tr>
+    <th>申請種別 <span class="required-mark">*</span></th>
+    <td>
+      <select name="relinfo[type]">
+        <option>新規</option>
+        <option>変更</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th>曲名 <span class="required-mark">*</span></th>
+    <td><%= input_text :relinfo, :title %></td>
+  </tr>
+  <tr>
+    <th>P名 <span class="required-mark">*</span></th>
+    <td><%= input_text :relinfo, :producer %></td>
+  </tr>
+  <tr>
+    <th>発表予定日 <span class="required-mark">*</span></th>
+    <td><%= input_text :relinfo, :date %></td>
+  </tr>
+  <tr>
+    <th>予定時刻</th>
+    <td><%= input_text :relinfo, :time %></td>
+  </tr>
+  <tr>
+    <th>サムネイル画像</th>
+    <td><input type="file" name="relinfo[image_file]"></td>
+  </tr>
+  <tr>
+    <th>使用ボカロ</th>
+    <td><%= input_text :relinfo, :vocaloid_chars %></td>
+  </tr>
+  <tr>
+    <th>動画師</th>
+    <td><%= input_text :relinfo, :movie_author %></td>
+  </tr>
+  <tr>
+    <th>絵師</th>
+    <td><%= input_text :relinfo, :illust_author %></td>
+  </tr>
+  <tr>
+    <th>連絡先(twitter) <span class="required-mark">*</span></th>
+    <td><%= input_text :relinfo, :twitter %></td>
+  </tr>
+  <tr>
+    <th>連絡先(Email) <span class="required-mark">*</span></th>
+    <td><%= input_text :relinfo, :email %></td>
+  </tr>
+  <tr>
+    <th>解説 <span class="required-mark">*</span></th>
+    <td><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea>
+  </tr>
+</table>
+<input type="submit" value="送信">
+</form>
