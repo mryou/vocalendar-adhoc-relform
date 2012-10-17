@@ -73,7 +73,9 @@ class RelForm < Sinatra::Base
       if !@relinfo.image_file.blank? && @relinfo.image_file[:tempfile]
         ext = File.extname @relinfo.image_file[:filename]
         ext.blank? and ext = "." + @relinfo.image_file[:type].split('/').last
-        FileUtils.mv @relinfo.image_file[:tempfile].path, "#{@@data_dir}/images/#{"%04d" % seq}#{ext}"
+        target_file = "#{@@data_dir}/images/#{"%04d" % seq}#{ext}"
+        FileUtils.mv @relinfo.image_file[:tempfile].path, target_file
+        File.chmod 0644, target_file
       end
 
       CSV.open("#{@@data_dir}/relinfo.csv", "a") do |csv|
