@@ -9,18 +9,26 @@ require 'fileutils'
 require 'mail'
 
 class RelForm < Sinatra::Base
-  enable :logging
-  enable :static
-  enable :sessions
-
   REL_FIELDS = %w(seq stamp type title url producer linkurl media
                   date time movie_author illust_author vocaloid_chars
                   twitter email description)
 
   @@data_dir = 'data'
-  @@notify = true
-  @@notify_to = 'sugi@nemui.org'
+  @@notify = false
+  @@notify_to = 'vocalendar@vocalendar.jp'
   @@notify_from = 'vocalendar@vocalendar.jp'
+  @@logging = app_file == $0
+
+  if File.readable? 'relform.conf'
+    require 'yaml'
+    YAML.load_file('relform.conf').each do |key, val|
+      class_variable_set "@@#{key}", val
+    end
+  end
+
+  enable :static
+  enable :sessions
+  @@logging and enable :logging
 
   configure :development do
     require "sinatra/reloader"
