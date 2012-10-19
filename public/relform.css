@@ -1,0 +1,7 @@
+.error { background-color: #FFBBBB; }
+.checkbox-set {
+  display: inline-block;
+  white-space: nowrap;
+  min-width: 8em;
+  margin-left: 1em;
+}

@@ -3,7 +3,7 @@
 以下の情報を入力して下さい。
 <span class="required-mark">*</span> マークは必須です(連絡先はどちらか)。
 </p>
-<% if @is_error %>
+<% if @relinfo.error? %>
 <p class="error">必須項目が入力されていません。入力を確認してください。</p>
 <% end %>
 <table>
@@ -34,14 +34,13 @@
     <td><%= input_text :relinfo, :linkurl %></td>
   </tr>
   <tr>
-    <th>(主)発表媒体</th>
+    <th class="<%= @relinfo.error?(:media) ? 'error' : ''%>">(主)発表媒体</th>
     <td>
-    <label><input type="checkbox" name="relinfo[media][]" value="ニコ動">ニコ動</label>
-    <label><input type="checkbox" name="relinfo[media][]" value="YouTube">YouTube</label>
-    <label><input type="checkbox" name="relinfo[media][]" value="Sound Croud">Sound Croud</label>
-    <label><input type="checkbox" name="relinfo[media][]" value="Vimeo">Vimeo</label>
+    <% ["ニコ動", "YouTube", "Sound Croud", "Vimeo"].each do |v| %>
+      <%= mcheck_box :relinfo, :media, v %>
+    <% end %>
     <br>
-    その他（自由記述）: <input type="text" name="relinfo[media][]">
+    その他（自由記述）: <%= input_text :relinfo, :media_other %>
     </td>
   </tr>
   <tr>
@@ -57,10 +56,10 @@
     <td><input type="file" name="relinfo[image_file]"></td>
   </tr>
   <tr>
-    <th>使用ボカロ <span class="required-mark">*</span></th>
+    <th class="<%= @relinfo.error?(:vocaloid_chars) ? 'error' : ''%>">使用ボカロ <span class="required-mark">*</span></th>
     <td>
     <% "LEON｜LOLA｜MIRIAM｜PRIMA｜SONIKA｜TONIO｜MEIKO｜KAITO｜初音ミク｜鏡音リン｜鏡音レン｜巡音ルカ｜SWEET ANN｜BIG AL｜OLIVER｜がくっぽいど｜Megpoid｜Lilly｜ガチャッポイド｜CUL｜氷山キヨテル｜歌愛ユキ｜SF-A2 開発コード miki｜猫村いろは｜結月ゆかり｜VY1｜VY2｜Mew｜兎眠りおん｜蒼姫ラピス｜Merli｜歌手音ピコ｜SeeU｜BRUNO｜CLARA｜IA｜洛天依｜CV-4Cβ｜あきこロイド｜galaco｜未定/TBA".split("｜").each do |v| %>
-       <label><input type="checkbox" name="relinfo[vocaloid_chars][]" value="<%=h v %>"><%=h v %></label>
+       <%= mcheck_box :relinfo, :vocaloid_chars, v %>
      <% end %>
      <br>
      その他:<input type="text" name="relinfo[vocaloid_chars][]">
