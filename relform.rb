@@ -79,7 +79,7 @@ class RelForm < Sinatra::Base
       end
 
       CSV.open("#{@@data_dir}/relinfo.csv", "a") do |csv|
-        csv << REL_FIELDS.map {|f| @relinfo.send f }
+        csv << REL_FIELDS.map {|f| @relinfo.send(f).to_s.force_encoding('utf-8').encode('shift_jis') }
       end
 
       open("#{@@data_dir}/seq", "w") { |s| s << seq }
