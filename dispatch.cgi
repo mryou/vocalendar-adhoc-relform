@@ -3,7 +3,6 @@ if File.readable? 'dispatch.rc'
  load './dispatch.rc'
 end
 
-require 'rack'
 STDOUT.sync = true
 
 load './relform.rb'
