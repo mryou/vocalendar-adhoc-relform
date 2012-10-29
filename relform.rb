@@ -43,6 +43,8 @@ class RelForm < Sinatra::Base
   @@notify_to = 'vocalendar@vocalendar.jp'
   @@notify_from = 'vocalendar@vocalendar.jp'
   @@logging = app_file == $0
+  @@environment = :development
+  @@session_secret = nil # NOTE: must overwride for CGI mode
 
   if File.readable? 'relform.conf'
     require 'yaml'
@@ -51,9 +53,11 @@ class RelForm < Sinatra::Base
     end
   end
 
+  set :environment, @@environment
   enable :static
   enable :sessions
   @@logging and enable :logging
+  @@session_secret and set :session_secret, @@session_secret
 
   configure :development do
     require "sinatra/reloader"
@@ -85,6 +89,7 @@ class RelForm < Sinatra::Base
 
   before do
     logger.info "param: #{params.inspect}"
+    logger.info "session: #{session.inspect}"
     @relinfo = OpenStruct.new
     @relinfo.errors = {}
     def @relinfo.error?(field = nil)
@@ -97,6 +102,7 @@ class RelForm < Sinatra::Base
   end
 
   get '/' do
+    session[:relinfo] = nil
     erb :new
   end
 
@@ -163,7 +169,6 @@ class RelForm < Sinatra::Base
 
   get '/thanks' do
     @relinfo = session[:relinfo] || OpenStruct.new
-    session[:relinfo] = nil
     erb :thanks
   end
 
