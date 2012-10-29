@@ -118,6 +118,10 @@ class RelForm < Sinatra::Base
     @relinfo.twitter.blank? && @relinfo.email.blank? and
       @relinfo.errors[:twitter] = @relinfo.errors[:email] = true
 
+    !@relinfo.email.blank? &&
+      @relinfo.email !~ %r{^[a-z0-9/,._+=-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$}i and
+      @relinfo.errors[:email] = true
+
     @relinfo.error? and return erb :new
 
     File.directory?("#{@@data_dir}/images") or Dir.mkdir "#{@@data_dir}/images"
