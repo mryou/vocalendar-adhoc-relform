@@ -1,1 +1,17 @@
-<p>受け付けました。登録ありがとうございました！</p>
+<p>以下の内容で登録を受け付けました。ありがとうございました！</p>
+
+<p>
+<% unless @relinfo.email.blank? %>
+入力されたメールアドレス宛にコピーをお送りしました。
+<% end %>
+何かお問い合わせがある場合は、以下の登録番号を教えていただけると助かります。
+</p>
+
+<table>
+<% RelForm::REL_FIELDS.each do |field| %>
+<tr>
+<th><%= field_label field %></th>
+<td><%=h @relinfo.send(field) %></td>
+</tr>
+<% end %>
+</table>
