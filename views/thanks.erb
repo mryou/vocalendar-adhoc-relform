@@ -8,7 +8,7 @@
 <% RelForm::REL_FIELDS.each do |field| %>
 <tr>
 <th><%= field_label field %></th>
-<td><%=h @relinfo.send(field) %></td>
+<td><%= h(@relinfo.send(field)).gsub(/\n/, '<br>') %></td>
 </tr>
 <% end %>
 </table>
