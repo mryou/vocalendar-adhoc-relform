@@ -43,6 +43,7 @@ class RelForm < Sinatra::Base
   @@notify_to = 'vocalendar@vocalendar.jp'
   @@notify_from = 'vocalendar@vocalendar.jp'
   @@logging = app_file == $0
+  @@log_level = nil
   @@environment = :development
   @@session_secret = nil # NOTE: must overwride for CGI mode
 
@@ -53,7 +54,7 @@ class RelForm < Sinatra::Base
     end
   end
 
-  set :environment, @@environment
+  set :environment, @@environment.to_sym
   enable :static
   enable :sessions
   @@logging and enable :logging
@@ -88,8 +89,9 @@ class RelForm < Sinatra::Base
   end
 
   before do
-    logger.info "param: #{params.inspect}"
-    logger.info "session: #{session.inspect}"
+    logger.level = @@log_level ? @@log_level : settings.environment == :development ? Logger::DEBUG : Logger::INFO
+    logger.debug "param: #{params.inspect}"
+    logger.debug "session: #{session.inspect}"
     @relinfo = OpenStruct.new
     @relinfo.errors = {}
     def @relinfo.error?(field = nil)
@@ -128,7 +130,10 @@ class RelForm < Sinatra::Base
       @relinfo.email !~ %r{^[a-z0-9/,._+=-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+$}i and
       @relinfo.errors[:email] = true
 
-    @relinfo.error? and return erb :new
+    if @relinfo.error?
+      logger.info "Form error (#{@relinfo.errors.keys}). Re-render input form."
+      return erb :new
+    end
 
     File.directory?("#{@@data_dir}/images") or Dir.mkdir "#{@@data_dir}/images"
 
@@ -160,13 +165,14 @@ class RelForm < Sinatra::Base
       open("#{@@data_dir}/seq", "w") { |s| s << seq }
     end
 
+    logger.info "Record new entry ##{@relinfo.seq}: #{@relinfo.title}"
+
     notify @relinfo, self
     begin
       send_copy @relinfo, self
     rescue => e
       logger.error "Failed to send copy #{e.to_s}"
     end
-
 
     @relinfo.image_file = nil
     session[:relinfo] = @relinfo
@@ -190,6 +196,7 @@ class RelForm < Sinatra::Base
 
   def notify(relinfo, sinatra_dsl)
     @@notify or return
+    logger.debug "Sending notify (#{@relinfo.title})"
     body_str = sinatra_dsl.erb(:mail_notify, :layout => false, :locals => {:relinfo => relinfo})
     Mail.deliver do
       to           @@notify_to
@@ -203,6 +210,7 @@ class RelForm < Sinatra::Base
   def send_copy(relinfo, sinatra_dsl)
     @@send_copy or return
     relinfo.email.blank? and return
+    logger.debug "Sending copy to #{@relinfo.email} (#{@relinfo.title})"
     body_str = sinatra_dsl.erb(:mail_copy, :layout => false, :locals => {:relinfo => relinfo})
     Mail.deliver do
       to           relinfo.email
