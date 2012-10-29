@@ -161,6 +161,12 @@ class RelForm < Sinatra::Base
     end
 
     notify @relinfo, self
+    begin
+      send_copy @relinfo, self
+    rescue => e
+      logger.error "Failed to send copy #{e.to_s}"
+    end
+
 
     @relinfo.image_file = nil
     session[:relinfo] = @relinfo
@@ -197,7 +203,14 @@ class RelForm < Sinatra::Base
   def send_copy(relinfo, sinatra_dsl)
     @@send_copy or return
     relinfo.email.blank? and return
-
+    body_str = sinatra_dsl.erb(:mail_copy, :layout => false, :locals => {:relinfo => relinfo})
+    Mail.deliver do
+      to           relinfo.email
+      from         @@send_copy_from
+      subject      "[登録受付] #{relinfo.title}"
+      content_type 'text/plain; charset=utf-8'
+      body         body_str
+    end
   end
 
   # start the server if ruby file executed directly
