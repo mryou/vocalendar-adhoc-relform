@@ -8,7 +8,7 @@
 <% end %>
 <table>
   <tr>
-    <th>申請種別 <span class="required-mark">*</span></th>
+    <th><%= field_label :type %><span class="required-mark">*</span></th>
     <td>
       <select name="relinfo[type]">
         <option>新規</option>
@@ -18,23 +18,25 @@
     </td>
   </tr>
   <tr>
-    <th>新曲タイトル <span class="required-mark">*</span></th>
+    <th><%= field_label :title %><span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :title %></td>
   </tr>
   <tr>
-    <th>URL</th>
+    <th><%= field_label :url %></th>
     <td><%= input_text :relinfo, :url %></td>
   </tr>
   <tr>
-    <th>P名 <span class="required-mark">*</span></th>
+    <th><%= field_label :producer %><span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :producer %></td>
   </tr>
   <tr>
-    <th>リンクURL</th>
+    <th><%= field_label :linkurl %></th>
     <td><%= input_text :relinfo, :linkurl %></td>
   </tr>
   <tr>
-    <th class="<%= @relinfo.error?(:media) ? 'error' : ''%>">(主)発表媒体</th>
+    <th class="<%= @relinfo.error?(:media) ? 'error' : ''%>">
+    <%= field_label :media %>
+    <span class="required-mark">*</span></th>
     <td>
     <% ["ニコ動", "YouTube", "Sound Croud", "Vimeo"].each do |v| %>
       <%= mcheck_box :relinfo, :media, v %>
@@ -44,19 +46,19 @@
     </td>
   </tr>
   <tr>
-    <th>発表予定日 <span class="required-mark">*</span></th>
+    <th><%= field_label :date %> <span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :date %></td>
   </tr>
   <tr>
-    <th>予定時刻</th>
+    <th><%= field_label :time %></th>
     <td><%= input_text :relinfo, :time %></td>
   </tr>
   <tr>
-    <th>サムネイル画像</th>
+    <th><%= field_label :image_file %></th>
     <td><input type="file" name="relinfo[image_file]"></td>
   </tr>
   <tr>
-    <th class="<%= @relinfo.error?(:vocaloid_chars) ? 'error' : ''%>">使用ボカロ <span class="required-mark">*</span></th>
+    <th class="<%= @relinfo.error?(:vocaloid_chars) ? 'error' : ''%>"><%= field_label :vocaloid_chars %> <span class="required-mark">*</span></th>
     <td>
     <% "LEON｜LOLA｜MIRIAM｜PRIMA｜SONIKA｜TONIO｜MEIKO｜KAITO｜初音ミク｜鏡音リン｜鏡音レン｜巡音ルカ｜SWEET ANN｜BIG AL｜OLIVER｜がくっぽいど｜Megpoid｜Lilly｜ガチャッポイド｜CUL｜氷山キヨテル｜歌愛ユキ｜SF-A2 開発コード miki｜猫村いろは｜結月ゆかり｜VY1｜VY2｜Mew｜兎眠りおん｜蒼姫ラピス｜Merli｜歌手音ピコ｜SeeU｜BRUNO｜CLARA｜IA｜洛天依｜CV-4Cβ｜あきこロイド｜galaco｜未定/TBA".split("｜").each do |v| %>
        <%= mcheck_box :relinfo, :vocaloid_chars, v %>
@@ -66,23 +68,27 @@
     </td>
   </tr>
   <tr>
-    <th>動画師名</th>
+    <th><%= field_label :twitter_hash %></th>
+    <td><%= input_text :relinfo, :twitter_hash %></td>
+  </tr>
+  <tr>
+    <th><%= field_label :movie_author %></th>
     <td><%= input_text :relinfo, :movie_author %></td>
   </tr>
   <tr>
-    <th>絵師名</th>
+    <th><%= field_label :illust_author %></th>
     <td><%= input_text :relinfo, :illust_author %></td>
   </tr>
   <tr>
-    <th>twitterID <span class="required-mark">*</span></th>
+    <th><%= field_label :twitter %> <span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :twitter %></td>
   </tr>
   <tr>
-    <th>メールアドレス <span class="required-mark">*</span></th>
+    <th><%= field_label :email %><span class="required-mark">*</span></th>
     <td><%= input_text :relinfo, :email %></td>
   </tr>
   <tr>
-    <th>解説文</th>
+    <th><%= field_label :description %></th>
     <td><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea>
   </tr>
 </table>

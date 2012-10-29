@@ -1,0 +1,10 @@
+新規データを受け取りました。
+
+[リリース情報]
+<%= RelForm::REL_FIELDS.map {|f| "#{field_label f}: #{relinfo.send(f)}" }.join("\n") %>
+
+
+[投稿元クライアント情報]
+<%= request.env["REMOTE_ADDR"] %>
+
+<%= request.env["HTTP_USER_AGENT"] %>

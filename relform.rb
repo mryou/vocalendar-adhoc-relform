@@ -8,13 +8,37 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/object/try'
 require 'fileutils'
 require 'mail'
+require 'pathname'
 
 class RelForm < Sinatra::Base
   REL_FIELDS = %w(seq stamp type title url producer linkurl media
                   date time movie_author illust_author vocaloid_chars
-                  twitter email description)
+                  twitter_hash twitter email image_attached description)
+  REL_FIELD_LABELS = {
+    :seq            => '登録No.',
+    :stamp          => '登録日時',
+    :type           => '申請種別',
+    :title          => '新曲タイトル',
+    :url            => 'URL',
+    :producer       => 'P名',
+    :linkurl        => 'リンクURL',
+    :media          => '(主)発表媒体',
+    :date           => '発表予定日',
+    :time           => '予定時刻',
+    :image_file     => 'サムネイル画像',
+    :image_attached => '画像添付',
+    :vocaloid_chars => '使用ボカロ',
+    :twitter_hash   => 'Twitter ハッシュタグ',
+    :movie_author   => '動画師名',
+    :illust_author  => '絵師名',
+    :twitter        => 'Twitter ID',
+    :email          => 'メールアドレス',
+    :description    => '解説文',
+  }
 
   @@data_dir = 'data'
+  @@send_copy = false
+  @@send_copy_from = 'vocalendar@vocalendar.jp'
   @@notify = false
   @@notify_to = 'vocalendar@vocalendar.jp'
   @@notify_from = 'vocalendar@vocalendar.jp'
@@ -52,6 +76,10 @@ class RelForm < Sinatra::Base
       attr_val = val.send(attr_name)
       is_checked = !attr_val.blank? && attr_val.member?(value)
       %Q{<span class="checkbox-set"><input type="checkbox" id="#{id}" name="#{val_name}[#{attr_name}][]" value="#{h value}" #{is_checked ? 'checked="checked"' : ''}><label for="#{id}">#{h label}</label></span>}
+    end
+
+    def field_label(name)
+      REL_FIELD_LABELS[name.to_sym] || name.to_s
     end
   end
 
@@ -102,6 +130,7 @@ class RelForm < Sinatra::Base
       end
       @relinfo.seq = session[:seq] = seq
       @relinfo.stamp = Time.now.strftime("%F %T")
+      @relinfo.image_attached = false
 
       if !@relinfo.image_file.blank? && @relinfo.image_file[:tempfile]
         ext = File.extname @relinfo.image_file[:filename]
@@ -109,6 +138,7 @@ class RelForm < Sinatra::Base
         target_file = "#{@@data_dir}/images/#{"%04d" % seq}#{ext}"
         FileUtils.mv @relinfo.image_file[:tempfile].path, target_file
         File.chmod 0644, target_file
+        @relinfo.image_attached = true
       end
 
       @relinfo.media = @relinfo.media.find_all {|i| !i.blank? }.join("//")
@@ -120,7 +150,7 @@ class RelForm < Sinatra::Base
       open("#{@@data_dir}/seq", "w") { |s| s << seq }
     end
 
-    notify @relinfo
+    notify @relinfo, self
 
     @relinfo.image_file = nil
     session[:relinfo] = @relinfo
@@ -143,15 +173,22 @@ class RelForm < Sinatra::Base
     end
   end
 
-  def notify(relinfo)
+  def notify(relinfo, sinatra_dsl)
     @@notify or return
+    body_str = sinatra_dsl.erb(:mail_notify, :layout => false, :locals => {:relinfo => relinfo})
     Mail.deliver do
       to           @@notify_to
       from         @@notify_from
       subject      "[P-Rel] #{relinfo.title}"
       content_type 'text/plain; charset=utf-8'
-      body          REL_FIELDS.map {|f| "#{f}: #{relinfo.send(f)}" }.join("\n")
+      body         body_str
     end
+  end
+
+  def send_copy(relinfo, sinatra_dsl)
+    @@send_copy or return
+    relinfo.email.blank? and return
+
   end
 
   # start the server if ruby file executed directly
