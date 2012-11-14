@@ -3,6 +3,7 @@ body {
 	width: 800px;
 	margin: 25px auto 50px auto;
 	font-size: 14px;
+	font-weight: normal;
 	line-height: 100%;
 }
 
@@ -53,6 +54,19 @@ input[type='text'] {
 
 textarea {
 	width: 600px;
+	line-height: 150%;
+}
+
+div.submitbutton {
+	margin: 50px auto auto auto;
+	text-align: center;
+}
+
+footer {
+	font-size: 12px;
+	line-height: 135%;
+	color: #999999;
+	margin-top: 50px;
 }
 
 .error { background-color: #FFBBBB; }

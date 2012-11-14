@@ -96,8 +96,11 @@
 	<dt><%= field_label :description %></dt>
 	<dd><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea></dd>
 </dl>
+<div class="submitbutton">
 <input type="submit" value="送信">
+</div>
 </form>
+
 <script type="text/javascript">
 $(function() {
   $('#relinfo_date').calendricalDate({ iso: 1 });
