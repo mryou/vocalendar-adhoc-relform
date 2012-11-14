@@ -1,4 +1,62 @@
+
+body {
+	width: 800px;
+	margin: 25px auto 50px auto;
+	font-size: 14px;
+	line-height: 100%;
+}
+
+header {
+	height: 100px;
+
+}
+
+section#leader h1 {
+	font-size: 32px;
+	color: #666666;
+	margin-top: 50px;
+}
+
+section#leader p {
+	width: 600px;
+	line-height: 150%;
+	color: #333333;
+
+}
+
+dl {
+	position: relative;
+	width: 800px;
+}
+
+dt{
+	color: #333333;
+    position: absolute;
+    top: 2px;
+}
+
+dd {
+	position: relative;
+	left: 200px;
+	width: 600px;
+    margin-left: 0px;
+
+}
+
+input {
+	color: #000000;
+}
+
+input[type='text'] {
+	width: 600px;
+}
+
+textarea {
+	width: 600px;
+}
+
 .error { background-color: #FFBBBB; }
+
 .checkbox-set {
   display: inline-block;
   white-space: nowrap;
