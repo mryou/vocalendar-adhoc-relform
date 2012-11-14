@@ -1,4 +1,5 @@
-<form method="post" action="create" enctype="multipart/form-data"> 
+<section id='leader'>
+<h1>新曲カレンダー申請フォーム</h1>
 <p>
 以下の情報を入力して下さい。
 <span class="required-mark">*</span> マークは必須です(連絡先はどちらか)。
@@ -6,92 +7,95 @@
 <% if @relinfo.error? %>
 <p class="error">必須項目が入力されていません。入力を確認してください。</p>
 <% end %>
-<table>
-  <tr>
-    <th><%= field_label :type %><span class="required-mark">*</span></th>
-    <td>
-      <select name="relinfo[type]">
-        <option>新規</option>
-        <option>変更</option>
-        <option>削除</option>
-      </select>
-    </td>
-  </tr>
-  <tr>
-    <th><%= field_label :title %><span class="required-mark">*</span></th>
-    <td><%= input_text :relinfo, :title %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :url %></th>
-    <td><%= input_text :relinfo, :url %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :producer %><span class="required-mark">*</span></th>
-    <td><%= input_text :relinfo, :producer %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :linkurl %></th>
-    <td><%= input_text :relinfo, :linkurl %></td>
-  </tr>
-  <tr>
-    <th class="<%= @relinfo.error?(:media) ? 'error' : ''%>">
-    <%= field_label :media %>
-    <span class="required-mark">*</span></th>
-    <td>
-    <% ["ニコ動", "YouTube", "Sound Croud", "Vimeo"].each do |v| %>
-      <%= mcheck_box :relinfo, :media, v %>
-    <% end %>
-    <br>
-    その他（自由記述）: <%= input_text :relinfo, :media_other %>
-    </td>
-  </tr>
-  <tr>
-    <th><%= field_label :date %> <span class="required-mark">*</span></th>
-    <td><%= input_text :relinfo, :date %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :time %></th>
-    <td><%= input_text :relinfo, :time %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :image_file %></th>
-    <td><input type="file" name="relinfo[image_file]"></td>
-  </tr>
-  <tr>
-    <th class="<%= @relinfo.error?(:vocaloid_chars) ? 'error' : ''%>"><%= field_label :vocaloid_chars %> <span class="required-mark">*</span></th>
-    <td>
-    <% "LEON｜LOLA｜MIRIAM｜PRIMA｜SONIKA｜TONIO｜MEIKO｜KAITO｜初音ミク｜鏡音リン｜鏡音レン｜巡音ルカ｜SWEET ANN｜BIG AL｜OLIVER｜がくっぽいど｜Megpoid｜Lilly｜ガチャッポイド｜CUL｜氷山キヨテル｜歌愛ユキ｜SF-A2 開発コード miki｜猫村いろは｜結月ゆかり｜VY1｜VY2｜Mew｜兎眠りおん｜蒼姫ラピス｜Merli｜歌手音ピコ｜SeeU｜BRUNO｜CLARA｜IA｜洛天依｜CV-4Cβ｜あきこロイド｜galaco｜未定/TBA".split("｜").each do |v| %>
-       <%= mcheck_box :relinfo, :vocaloid_chars, v %>
-     <% end %>
-     <br>
-     その他:<input type="text" name="relinfo[vocaloid_chars][]">
-    </td>
-  </tr>
-  <tr>
-    <th><%= field_label :twitter_hash %></th>
-    <td><%= input_text :relinfo, :twitter_hash %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :movie_author %></th>
-    <td><%= input_text :relinfo, :movie_author %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :illust_author %></th>
-    <td><%= input_text :relinfo, :illust_author %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :twitter %> <span class="required-mark">*</span></th>
-    <td><%= input_text :relinfo, :twitter %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :email %><span class="required-mark">*</span></th>
-    <td><%= input_text :relinfo, :email %></td>
-  </tr>
-  <tr>
-    <th><%= field_label :description %></th>
-    <td><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea>
-  </tr>
-</table>
+</section>
+
+<section>
+
+<form method="post" action="create" enctype="multipart/form-data">
+<dl>
+	<dt><%= field_label :type %><span class="required-mark">*</span></dt>
+	<dd>
+		<select name="relinfo[type]">
+			<option>新規</option>
+			<option>変更</option>
+			<option>削除</option>
+		</select>
+	</dd>
+</dl>
+<dl>
+	<dt><%= field_label :title %><span class="required-mark">*</span></dt>
+	<dd><%= input_text :relinfo, :title %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :url %></dt>
+	<dd><%= input_text :relinfo, :url %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :producer %><span class="required-mark">*</span></dt>
+	<dd><%= input_text :relinfo, :producer %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :linkurl %></dt>
+	<dd><%= input_text :relinfo, :linkurl %></dd>
+</dl>
+<dl>
+	<dt class="<%= @relinfo.error?(:media) ? 'error' : ''%>">
+	<%= field_label :media %>
+	<span class="required-mark">*</span></dt>
+	<dd>
+	<% ["ニコ動", "YouTube", "Sound Croud", "Vimeo"].each do |v| %>
+	<%= mcheck_box :relinfo, :media, v %>
+	<% end %>
+	<br>
+	その他（自由記述）: <%= input_text :relinfo, :media_other %>
+	</dd>
+</dl>
+<dl>
+	<dt><%= field_label :date %> <span class="required-mark">*</span></dt>
+	<dd><%= input_text :relinfo, :date %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :time %></dt>
+	<dd><%= input_text :relinfo, :time %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :image_file %></dt>
+	<dd><input type="file" name="relinfo[image_file]"></dd>
+</dl>
+<dl>
+	<dt class="<%= @relinfo.error?(:vocaloid_chars) ? 'error' : ''%>"><%= field_label :vocaloid_chars %> <span class="required-mark">*</span></dt>
+	<dd>
+	<% "LEON｜LOLA｜MIRIAM｜PRIMA｜SONIKA｜TONIO｜MEIKO｜KAITO｜初音ミク｜鏡音リン｜鏡音レン｜巡音ルカ｜SWEET ANN｜BIG AL｜OLIVER｜がくっぽいど｜Megpoid｜Lilly｜ガチャッポイド｜CUL｜氷山キヨテル｜歌愛ユキ｜SF-A2 開発コード miki｜猫村いろは｜結月ゆかり｜VY1｜VY2｜Mew｜兎眠りおん｜蒼姫ラピス｜Merli｜歌手音ピコ｜SeeU｜BRUNO｜CLARA｜IA｜洛天依｜CV-4Cβ｜あきこロイド｜galaco｜未定/TBA".split("｜").each do |v| %>
+	<%= mcheck_box :relinfo, :vocaloid_chars, v %>
+	<% end %>
+	<br>
+	その他:<input type="text" name="relinfo[vocaloid_chars][]">
+	</dd>
+</dl>
+<dl>
+	<dt><%= field_label :twitter_hash %></dt>
+	<dd><%= input_text :relinfo, :twitter_hash %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :movie_author %></dt>
+	<dd><%= input_text :relinfo, :movie_author %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :illust_author %></dt>
+	<dd><%= input_text :relinfo, :illust_author %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :twitter %> <span class="required-mark">*</span></dt>
+	<dd><%= input_text :relinfo, :twitter %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :email %><span class="required-mark">*</span></dt>
+	<dd><%= input_text :relinfo, :email %></dd>
+</dl>
+<dl>
+	<dt><%= field_label :description %></dt>
+	<dd><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea></dd>
+</dl>
 <input type="submit" value="送信">
 </form>
 <script type="text/javascript">
@@ -100,3 +104,5 @@ $(function() {
   $('#relinfo_time').calendricalTime({ iso: 1 });
 });
 </script>
+
+</section>
