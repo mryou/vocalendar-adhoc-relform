@@ -1,14 +1,15 @@
+<section id='leader'>
 <p>以下の内容で登録を受け付けました。ありがとうございました！</p>
-
 <p>
 何かお問い合わせがある場合は、以下の登録番号を教えていただけると助かります。
 </p>
+</section>
 
-<table>
 <% RelForm::REL_FIELDS.each do |field| %>
-<tr>
-<th><%= field_label field %></th>
-<td><%= h(@relinfo.send(field)).gsub(/\n/, '<br>') %></td>
-</tr>
+<dl>
+<dt><%= field_label field %></dt>
+<dd>
+<%= @relinfo.send(field) ?  h(@relinfo.send(field)).gsub(/\n/, '<br>') : '<input class="hidden" />' %>
+</dd>
+</dl>
 <% end %>
-</table>
