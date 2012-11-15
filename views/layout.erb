@@ -1,17 +1,26 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1280" />
 	<link rel="shortcut icon" href="http://vocalendar.jp/favicon.ico">
 
+	<!-- IE HTML5 ENABLER //-->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="jquery.calendrical.js"></script>
 	<link href="relform.css" rel="stylesheet" type="text/css" />
 	<link href="calendarial.css" media="screen" rel="stylesheet" type="text/css" />
+	<!--[if lt IE 9]>
+	<link href="relform.ie.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
 	<title>VOCALENDAR（ボカレンダー）| 新曲予定登録</title>
 </head>
 <body>
+<div class="ie">
 <header>
-<h1><a href="/">VOCALENDAR（ボカレンダー）</a></h1>
+<h1 id="citeTitle"><a href="/">VOCALENDAR（ボカレンダー）</a></h1>
 </header>
 
 <%= yield %>
@@ -20,6 +29,6 @@
  『VOCALENDAR』編集メンバー募集中！（特に過去の出来事をアーカイブできちゃう方）ご興味ある方は @curioustander (twitter) までご連絡ください！ / 当サイト『VOCALENDAR』に掲載されている情報は個人利用の範囲でご自由にお使いいただいて結構ですが、商用利用はご遠慮ください。 / イラストはイラストレーターさんの大切な作品です。無断使用・転載などはくれぐれもおやめください。 / 当サイトで使用しているイラストはピアプロ・キャラクター・ライセンスに基いてクリプトン・フューチャー・メディア株式会社のキャラクター『初音ミク』を描いたものです。 / VOCALOIDならびにボーカロイドはヤマハ株式会社の登録商標です。 / 『MEIKO』『KAITO』『初音ミク』『鏡音リン』『鏡音レン』『巡音ルカ』はクリプトン・フューチャー・メディア株式会社の著作物です。 / 『歌愛ユキ』『氷山キヨテル』『SF-A2 開発コード miki』『猫村いろは』『結月ゆかり』は、株式会社AHSの登録商標です。 / 『Megpoid』『がくっぽいど』『Lily』『CUL』は株式会社インターネットの登録商標です。 / その他の製品・商品名は各社の商標または登録商標です。
 
 </footer>
-
+</div>
 </body>
 </html>

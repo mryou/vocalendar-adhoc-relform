@@ -1,4 +1,3 @@
-
 body {
 	width: 800px;
 	margin: 25px auto 50px auto;
@@ -7,9 +6,31 @@ body {
 	line-height: 100%;
 }
 
+
 header {
 	height: 100px;
+}
 
+#citeTitle {
+    position: relative;
+	top: 25px;
+	left: 419px;
+	height: 36px;
+	width: 381px;
+	background-image: url(http://vocalendar.jp/images/vocalendar-titlelogo-revb.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	z-index: 0;
+}
+#citeTitle a {
+    position: relative;
+	cursor: pointer;
+	filter: alpha(opacity=0);
+	-moz-opacity: 0;
+	-ms-filter:"alpha(opacity=70)";
+	opacity: 0;
+	z-index: 1;
 }
 
 section#leader h1 {
@@ -22,7 +43,6 @@ section#leader p {
 	width: 600px;
 	line-height: 150%;
 	color: #333333;
-
 }
 
 dl {
@@ -30,18 +50,17 @@ dl {
 	width: 800px;
 }
 
-dt{
+dt {
 	color: #333333;
-    position: absolute;
-    top: 2px;
+	position: absolute;
+	top: 2px;
 }
 
 dd {
 	position: relative;
 	left: 200px;
 	width: 600px;
-    margin-left: 0px;
-
+	margin-left: 0px;
 }
 
 input {
@@ -69,11 +88,13 @@ footer {
 	margin-top: 50px;
 }
 
-.error { background-color: #FFBBBB; }
+.error {
+	background-color: #FFBBBB;
+}
 
 .checkbox-set {
-  display: inline-block;
-  white-space: nowrap;
-  min-width: 8em;
-  margin-left: 1em;
+	display: inline-block;
+	white-space: nowrap;
+	min-width: 8em;
+	margin-left: 1em;
 }

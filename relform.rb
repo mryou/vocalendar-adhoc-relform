@@ -71,7 +71,7 @@ class RelForm < Sinatra::Base
 
     def input_text(val_name, attr_name)
       val = instance_variable_get("@#{val_name}")
-      %Q{<input type="text" class="#{val.errors.has_key?(attr_name.to_sym) ? 'error' : ''}" id="#{val_name}_#{attr_name}" name="#{val_name}[#{attr_name}]" value="#{h val.send(attr_name) }">}
+      %Q{<input type="text" class="input_text #{val.errors.has_key?(attr_name.to_sym) ? 'error' : ''}" id="#{val_name}_#{attr_name}" name="#{val_name}[#{attr_name}]" value="#{h val.send(attr_name) }">}
     end
 
     def mcheck_box(val_name, attr_name, value, label = nil)
@@ -80,7 +80,7 @@ class RelForm < Sinatra::Base
       val = instance_variable_get("@#{val_name}")
       attr_val = val.send(attr_name)
       is_checked = !attr_val.blank? && attr_val.member?(value)
-      %Q{<span class="checkbox-set"><input type="checkbox" id="#{id}" name="#{val_name}[#{attr_name}][]" value="#{h value}" #{is_checked ? 'checked="checked"' : ''}><label for="#{id}">#{h label}</label></span>}
+      %Q{<span class="checkbox-set"><input type="checkbox" id="#{id}" class="checkbox" name="#{val_name}[#{attr_name}][]" value="#{h value}" #{is_checked ? 'checked="checked"' : ''}><label for="#{id}">#{h label}</label></span>}
     end
 
     def field_label(name)
