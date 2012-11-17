@@ -26,7 +26,8 @@ dl {
 	margin-bottom: 10px;
 }
 
-input.input_text {
-		width: 100%;
-
+input.input_text, textarea {
+	padding: 5px 5px;
+	width: 594px; /*パディングの分を削る*/
+	font-size: 14px;
 }

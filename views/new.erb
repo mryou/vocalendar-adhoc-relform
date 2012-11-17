@@ -42,7 +42,7 @@
 	<dt class="<%= @relinfo.error?(:media) ? 'error' : ''%>">
 	<%= field_label :media %>
 	<span class="required-mark">*</span></dt>
-	<dd>
+	<dd class='checkbox-conteinar'>
 	<% ["ニコ動", "YouTube", "Sound Croud", "Vimeo"].each do |v| %>
 	<%= mcheck_box :relinfo, :media, v %>
 	<% end %>
@@ -64,7 +64,7 @@
 </dl>
 <dl>
 	<dt class="<%= @relinfo.error?(:vocaloid_chars) ? 'error' : ''%>"><%= field_label :vocaloid_chars %> <span class="required-mark">*</span></dt>
-	<dd>
+	<dd class='checkbox-conteinar'>
 	<% "LEON｜LOLA｜MIRIAM｜PRIMA｜SONIKA｜TONIO｜MEIKO｜KAITO｜初音ミク｜鏡音リン｜鏡音レン｜巡音ルカ｜SWEET ANN｜BIG AL｜OLIVER｜がくっぽいど｜Megpoid｜Lilly｜ガチャッポイド｜CUL｜氷山キヨテル｜歌愛ユキ｜SF-A2 開発コード miki｜猫村いろは｜結月ゆかり｜VY1｜VY2｜Mew｜兎眠りおん｜蒼姫ラピス｜Merli｜歌手音ピコ｜SeeU｜BRUNO｜CLARA｜IA｜洛天依｜CV-4Cβ｜あきこロイド｜galaco｜未定/TBA".split("｜").each do |v| %>
 	<%= mcheck_box :relinfo, :vocaloid_chars, v %>
 	<% end %>
@@ -97,7 +97,7 @@
 	<dd><textarea name="relinfo[description]"><%=h @relinfo.description %></textarea></dd>
 </dl>
 <div class="submitbutton">
-<input type="submit" value="送信">
+<input type="submit" value="送信" class="regist">
 </div>
 </form>
 
